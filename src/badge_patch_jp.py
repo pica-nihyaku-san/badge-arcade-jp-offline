@@ -71,7 +71,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 
-from patch_format import ROOT, arm_branch, encode_ips, decode_ips, read_arm_object, write_zip
+from patch_format import ROOT, arm_branch, encode_ips, decode_ips, read_arm_object
 from badge_versions import JP_UPDATE, Revision
 from badge_patch import HOME_HOOKS, HOOKS as EUR_HOOKS
 
@@ -203,7 +203,6 @@ def verify_ips(ips: bytes, records: list[tuple[int, bytes]], revision: Revision)
         raise ValueError("IPS round-trip mismatch")
     payload_address = revision.address(PAYLOAD_ADDRESS)
     payload_lo = payload_address - LOAD_ADDRESS
-    payload_hi = payload_lo + len(records[0][1]) if records[0][0] == payload_lo else None
     for offset, data in records:
         if len(data) == 4 and offset != payload_lo:
             word = int.from_bytes(data, "little")
